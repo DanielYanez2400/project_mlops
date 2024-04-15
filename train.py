@@ -1,7 +1,9 @@
 import pandas as pd
 import numpy as np
 import os
+import json
 import warnings
+import joblib
 from sklearn.model_selection import train_test_split, cross_val_predict
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import MinMaxScaler, OneHotEncoder, OrdinalEncoder
@@ -10,7 +12,7 @@ from sklearn.compose import make_column_transformer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, recall_score, precision_score, f1_score
 
-os.chdir('C:/Users/danie/OneDrive - Instituto Tecnologico y de Estudios Superiores de Monterrey/ITESM/Machine Learning Bootcamp/')
+os.chdir('C:/Users/danie/OneDrive - Instituto Tecnologico y de Estudios Superiores de Monterrey/ITESM/Machine Learning Bootcamp/project/')
 SEED = 42
 
 if __name__ == '__main__':
@@ -18,7 +20,7 @@ if __name__ == '__main__':
     warnings.filterwarnings('ignore')
 
     # Load data
-    data = pd.read_csv('data/Absenteeism_at_work.csv', sep=';')
+    data = pd.read_csv('../data/Absenteeism_at_work.csv', sep=';')
 
     # Preprocessing data
     data.rename(columns = {'Work load Average/day ': 'Work load Average/day'}, inplace=True)
@@ -69,3 +71,15 @@ if __name__ == '__main__':
     print(f"  Recall: {recall}")
     print(f"  Precision: {precision}")
     print(f"  F1 Score: {f1}")
+
+    # Save the metrics
+    metrics = {'Accuracy': accuracy,
+               'Recall': recall,
+               'Precision': precision,
+               'F1 Score': f1}
+    
+    with open('metrics.json', 'w') as fp:
+        json.dump(metrics, fp)
+
+    # Save the trained model
+    joblib.dump(rf, 'model.pkl')
