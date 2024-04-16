@@ -11,6 +11,8 @@ from sklearn.pipeline import make_pipeline
 from sklearn.compose import make_column_transformer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, recall_score, precision_score, f1_score
+import mlflow
+from get_or_create_mlflow_experiment import get_experiment
 
 os.chdir('C:/Users/danie/OneDrive - Instituto Tecnologico y de Estudios Superiores de Monterrey/ITESM/Machine Learning Bootcamp/project/')
 SEED = 42
