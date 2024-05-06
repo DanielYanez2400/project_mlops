@@ -85,3 +85,16 @@ if __name__ == '__main__':
 
     # Save the trained model
     joblib.dump(rf, 'model.pkl')
+
+
+mlflow.set_experiment(experiment_name='absenteeism_at_work')
+
+with mlflow.start_run():
+    mlflow.log_metric('accuracy', accuracy)
+    mlflow.log_metric('recall', recall)
+    mlflow.log_metric('precision', precision)
+    mlflow.log_metric('f1-score', f1)
+
+    mlflow.set_tag('Training info', 'Primera iteración del modelo')
+
+    mlflow.sklearn.log_model()
